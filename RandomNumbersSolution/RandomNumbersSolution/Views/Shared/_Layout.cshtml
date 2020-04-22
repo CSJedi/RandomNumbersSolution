@@ -25,6 +25,7 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Game", "Index", "Game")</li>
+                        <li>@Html.ActionLink("Game", "Play", "Game")</li>
                     }
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
