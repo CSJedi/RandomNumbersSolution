@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using RandomNumbersSolution.Domain.Entities;
+using RandomNumbersSolution.Models;
 
 namespace RandomNumbersSolution.Models
 {
@@ -28,34 +28,58 @@ namespace RandomNumbersSolution.Models
         {
         }
 
-        public static ApplicationDbContext Create()
+        public static async Task<ApplicationDbContext> CreateAsync()
         {
             var context = new ApplicationDbContext();
-           
-                var match = new Match
+            //if(await context.Matches.CountAsync() == 0)
+            //{
+                Random random = new Random();
+                var match = new List<Match>
                 {
-                    Id = 1,
-                    Expiration = DateTime.Now,
-                    Items = new List<MatchItem>
+                    new Match
                     {
-                        new MatchItem
+                        Id = 1,
+                        Expiration = DateTime.Now.AddHours(1),
+                        Items = new List<MatchItem>
                         {
-                            Number = 57,
-                            UserName = "vasya.pupkin@gmail.com"
-                        },
-                       new MatchItem
-                        {
-                            Number = 51,
-                            UserName = "tetiana.zhydeikina@gmail.com"
+                            new MatchItem
+                            {
+                                Number = random.Next(),
+                                UserName = "sam"
+                            }
                         }
                     },
-                    WinUserName = "vasya.pupkin"
-                };
+                    new Match
+                    {
+                        Id = 2,
+                        Expiration = DateTime.Now.AddHours(2),
+                        Items = new List<MatchItem>
+                        {
+                            new MatchItem
+                            {
+                                Number = random.Next(),
+                                UserName = "james"
+                            }
+                        }
+                    },
+                    new Match
+                    {
+                        Id = 3,
+                        Expiration = DateTime.Now.AddHours(3),
+                        Items = new List<MatchItem>
+                        {
+                            new MatchItem
+                            {
+                                Number = random.Next(),
+                                UserName = "peter"
+                            }
+                        }
+                    }
+                 };
 
-                context.Matches.Add(match);
+                context.Matches.AddRange(match);
                 context.SaveChanges();
-          
-          
+            //}
             return context;
         }
 

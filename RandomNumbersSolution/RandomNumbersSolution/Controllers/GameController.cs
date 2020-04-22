@@ -1,4 +1,4 @@
-﻿using RandomNumbersSolution.Domain.Entities;
+﻿using RandomNumbersSolution.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +12,10 @@ namespace RandomNumbersSolution.Controllers
     [Authorize]
     public class GameController :  Controller
     {
-        private Models.ApplicationDbContext db = new Models.ApplicationDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            var matches = db.Matches.ToList();
+            var matches = db.Matches.Where(m => !String.IsNullOrEmpty(m.WinUserName)).ToList();
             var result = new List<Match>();
             foreach (var match in matches)
             {
@@ -39,19 +39,17 @@ namespace RandomNumbersSolution.Controllers
 
         public ActionResult GameBegin()
         {
-            return View(new Match());
+            return View();
         }
 
-        public ActionResult Play(Match match)
+        public ActionResult Play()
         {
             Random random = new Random();
             var matchItem = new MatchItem
             {
-                MatchId = match.Id,
                 UserName = User.Identity.Name,
                 Number = random.Next()
             };
-            match.Items.Add(matchItem);
             return View(matchItem);
         }
         private Match GetCurrentMatch()
@@ -67,9 +65,8 @@ namespace RandomNumbersSolution.Controllers
             if (currentMatch == null) throw new Exception("there is no available match");
         
             currentMatch.Items.Add(matchItem);
-
+       
             return View(currentMatch);
         }
-
     }
 }

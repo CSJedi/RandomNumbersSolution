@@ -184,10 +184,8 @@
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Domain\Entities\Match.cs" />
-    <Compile Include="Domain\Entities\MatchItem.cs" />
-    <Compile Include="Domain\Services\GameService.cs" />
-    <Compile Include="Domain\Services\Interfaces\IGameService.cs" />
+    <Compile Include="Models\Match.cs" />
+    <Compile Include="Models\MatchItem.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
