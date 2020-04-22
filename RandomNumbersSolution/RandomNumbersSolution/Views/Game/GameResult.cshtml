@@ -3,15 +3,23 @@
     ViewBag.Title = "GameResult";
 }
 @Html.HiddenFor(model => model.Id)
-@Html.HiddenFor(model => model.Expired)
-<div class="jumbotron">
-    <h2>Game result: <span class="label label-success">@Html.DisplayFor(model => model.WinUserName)</span></h2>
-    @foreach (var matchItem in Model.Items)
-    {
-        <div>
-            <p>User: @Html.DisplayFor(modelItem => matchItem.UserName)</p>
-            <p>Number: @Html.DisplayFor(modelItem => matchItem.Number)</p>
-        </div>
-        @Html.ActionLink("Refresh result", "GameResult", new { id = matchItem.Id }, new { @class = "btn btn-success" })
-    }
-</div>
+    <div class="jumbotron">
+        @if (Model.Expired < DateTime.Now)
+        {
+            <h2>Game result: <span class="label label-success">@Html.DisplayFor(model => model.WinUserName)</span></h2>
+        }
+        else
+        {
+            <h2>Game result will be at @Html.DisplayFor(model => model.Expired)</h2>
+        }
+
+        @foreach (var matchItem in Model.Items)
+        {
+            @Html.HiddenFor(modelItem => matchItem.Id)
+            <div>
+                <p>User: @Html.DisplayFor(modelItem => matchItem.UserName)</p>
+                <p>Number: @Html.DisplayFor(modelItem => matchItem.Number)</p>
+            </div>
+            @Html.ActionLink("Refresh result", "GameResult", matchItem, new { @class = "btn btn-success" })
+        }
+    </div>

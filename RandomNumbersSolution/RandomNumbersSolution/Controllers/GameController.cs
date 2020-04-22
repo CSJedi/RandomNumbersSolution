@@ -34,7 +34,7 @@ namespace RandomNumbersSolution.Controllers
 
         public ActionResult GameResult(MatchItem matchItem)
         {
-            var currentMatch = db.Matches.FirstOrDefault(m => m.Id == matchItem.MatchId);
+          var currentMatch = db.Matches.FirstOrDefault(m => m.Id == matchItem.MatchId);
             if(!db.MatchItems.Any(i =>i.Id == matchItem.Id))
             {
                 db.MatchItems.Add(matchItem);
