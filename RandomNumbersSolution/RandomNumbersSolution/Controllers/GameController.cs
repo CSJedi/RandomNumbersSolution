@@ -65,7 +65,6 @@ namespace RandomNumbersSolution.Controllers
             if (currentMatch == null) throw new Exception("there is no available match");
             currentMatch.Items.Add(matchItem);
             var opponentMatchItem = db.MatchItems.FirstOrDefault(m => m.MatchId == currentMatch.Id && m.Id != matchItem.Id);
-            currentMatch.Items.Add(matchItem);
             currentMatch.WinUserName = matchItem.Number > opponentMatchItem.Number ? matchItem.UserName : opponentMatchItem.UserName;
             return View(currentMatch);
         }
