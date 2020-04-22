@@ -8,10 +8,19 @@ namespace RandomNumbersSolution.Controllers
 {
     public class HomeController : Controller
     {
+        private Models.ApplicationDbContext db = new Models.ApplicationDbContext();
+
+        // GET: Matches
         public ActionResult Index()
         {
-            return View();
+            var matches = db.Matches.ToList();
+            foreach (var match in matches)
+            {
+                match.Items = db.MatchItems.Where(m => m.MatchId == match.Id).ToList();
+            }
+            return View(matches);
         }
+
 
         public ActionResult About()
         {

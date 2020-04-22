@@ -184,12 +184,9 @@
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MatchesController.cs" />
     <Compile Include="Domain\Entities\Match.cs" />
     <Compile Include="Domain\Entities\MatchItem.cs" />
-    <Compile Include="Domain\Repositories\IBasicRepository.cs" />
-    <Compile Include="Domain\Repositories\ICrudRepository.cs" />
-    <Compile Include="Domain\Repositories\IMatchItemRepository.cs" />
-    <Compile Include="Domain\Repositories\IMatchRepository.cs" />
     <Compile Include="Domain\Services\GameService.cs" />
     <Compile Include="Domain\Services\Interfaces\IGameService.cs" />
     <Compile Include="Global.asax.cs">
@@ -260,6 +257,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Matches\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

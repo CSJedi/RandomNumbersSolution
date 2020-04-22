@@ -1,8 +1,11 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using RandomNumbersSolution.Domain.Entities;
 
 namespace RandomNumbersSolution.Models
 {
@@ -27,7 +30,36 @@ namespace RandomNumbersSolution.Models
 
         public static ApplicationDbContext Create()
         {
-            return new ApplicationDbContext();
+            var context = new ApplicationDbContext();
+           
+                var match = new Match
+                {
+                    Id = 1,
+                    Expiration = DateTime.Now,
+                    Items = new List<MatchItem>
+                    {
+                        new MatchItem
+                        {
+                            Number = 57,
+                            UserName = "vasya.pupkin"
+                        },
+                       new MatchItem
+                        {
+                            Number = 51,
+                            UserName = "tetiana.zhydeikina"
+                        }
+                    },
+                    WinUserName = "vasya.pupkin"
+                };
+
+                context.Matches.Add(match);
+                context.SaveChanges();
+          
+          
+            return context;
         }
+
+        public DbSet<Match> Matches { get; set; }
+        public DbSet<MatchItem> MatchItems { get; set; }
     }
 }
