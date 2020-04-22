@@ -5,9 +5,6 @@
 
     <div class="jumbotron">
         <h1>Matches</h1>
-        <p>
-            @Html.ActionLink("Refresh result", "Index")
-        </p>
         <table class="table">
             <tr>
                 <th>
@@ -38,7 +35,14 @@
                         <p>@Html.DisplayFor(modelItem => item.Expired)</p>
                     </td>
                     <th>
-                        <p>@Html.DisplayFor(model => item.WinUserName)</p>
+                        @if (item.Expired < DateTime.Now)
+                        {
+                            <p>@Html.DisplayFor(model => item.WinUserName)</p>
+                        }
+                        else
+                        {
+                            <input type="button" title="Play Now" value="Play Now" class="btn btn-success" onclick="location.href='@Url.Action("Play", "Game", Model)'" />
+                        }
                     </th>
                 </tr>
             }

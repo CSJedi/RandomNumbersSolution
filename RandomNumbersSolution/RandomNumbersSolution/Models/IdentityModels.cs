@@ -39,7 +39,7 @@ namespace RandomNumbersSolution.Models
                     new Match
                     {
                         Id = 1,
-                        Expired = DateTime.Now.AddHours(1),
+                        Expired = DateTime.Now.AddMinutes(10),
                         Items = new List<MatchItem>
                         {
                             new MatchItem
@@ -52,7 +52,7 @@ namespace RandomNumbersSolution.Models
                     new Match
                     {
                         Id = 2,
-                        Expired = DateTime.Now.AddHours(2),
+                        Expired = DateTime.Now.AddMinutes(11),
                         Items = new List<MatchItem>
                         {
                             new MatchItem
@@ -65,7 +65,7 @@ namespace RandomNumbersSolution.Models
                     new Match
                     {
                         Id = 3,
-                        Expired = DateTime.Now.AddHours(3),
+                        Expired = DateTime.Now.AddMinutes(12),
                         Items = new List<MatchItem>
                         {
                             new MatchItem

@@ -15,16 +15,15 @@ namespace RandomNumbersSolution.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            var matches = db.Matches.Where(m =>!String.IsNullOrEmpty(m.WinUserName) || m.Expired < DateTime.Now).ToList();
-            var result = new List<Match>();
+            var matches = db.Matches.ToList();
             foreach (var match in matches)
             {
                 match.Items = db.MatchItems.Where(m => m.MatchId == match.Id).ToList();
     
-                if (match.Items != null && CheckIsUserPlayedMatch(match))
-                    result.Add(match);
+                //if (match.Items != null && CheckIsUserPlayedMatch(match))
+                //    result.Add(matches);
             }
-            return View(result);
+            return View(matches);
         }
 
         private bool CheckIsUserPlayedMatch(Match match)
@@ -37,38 +36,26 @@ namespace RandomNumbersSolution.Controllers
             return false;
         }
 
-        public ActionResult GameBegin()
+        public ActionResult Play(Match match)
         {
-            return View();
-        }
-
-        public ActionResult Play()
-        {
+            if (match == null) throw new Exception("there is no available match");
             Random random = new Random();
             var matchItem = new MatchItem
             {
+                MatchId = match.Id,
                 UserName = User.Identity.Name,
                 Number = random.Next()
             };
+            match.Items.AddRange(db.MatchItems.Where(i =>i.MatchId == match.Id).ToList());
             return View(matchItem);
-        }
-        private Match GetCurrentMatch()
-        {
-            var matches = db.Matches.ToList();
-            var currentTime = DateTime.Now;
-            return matches.ToList().OrderBy(x => x.Expired).FirstOrDefault(x => x.Expired > currentTime);
         }
 
         public ActionResult GameResult(MatchItem matchItem)
         {
-            var currentMatch = GetCurrentMatch();
-            if (currentMatch == null) throw new Exception("there is no available match");
-            currentMatch.Items.Add(matchItem);
-            var opponentMatchItem = db.MatchItems.FirstOrDefault(m => m.MatchId == currentMatch.Id && m.Id != matchItem.Id);
-            currentMatch.WinUserName = matchItem.Number > opponentMatchItem.Number ? matchItem.UserName : opponentMatchItem.UserName;
-            currentMatch.Expired = DateTime.Now;
-            db.SaveChanges();
-            return View(currentMatch);
+            //var opponentsMatchItems = db.MatchItems.Where(m => m.MatchId == currentMatch.Id && m.Id != matchItem.Id);
+            //currentMatch.WinUserName = currentMatch.Items.FirstOrDefault(m => m.Number == currentMatch.Items.Max(i => i.Number)).UserName;
+            //db.SaveChanges();
+            return View(matchItem);
         }
     }
 }
