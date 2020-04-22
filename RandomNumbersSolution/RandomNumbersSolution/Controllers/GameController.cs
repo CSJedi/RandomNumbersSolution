@@ -37,9 +37,22 @@ namespace RandomNumbersSolution.Controllers
             return false;
         }
 
-        public ActionResult Play()
+        public ActionResult GameBegin()
         {
-            return View();
+            return View(new Match());
+        }
+
+        public ActionResult Play(Match match)
+        {
+            Random random = new Random();
+            var matchItem = new MatchItem
+            {
+                MatchId = match.Id,
+                UserName = User.Identity.Name,
+                Number = random.Next()
+            };
+            match.Items.Add(matchItem);
+            return View(matchItem);
         }
         private Match GetCurrentMatch()
         {
@@ -48,18 +61,11 @@ namespace RandomNumbersSolution.Controllers
             return matches.ToList().OrderBy(x => x.Expiration).FirstOrDefault(x => x.Expiration > currentTime);
         }
 
-        public ActionResult SubmitNumber(int number)
+        public ActionResult Submit(MatchItem matchItem)
         {
             var currentMatch = GetCurrentMatch();
             if (currentMatch == null) throw new Exception("there is no available match");
-
-            var matchItem = new MatchItem
-            {
-                MatchId = currentMatch.Id,
-                UserName = User.Identity.Name,
-                Number = number
-            };
-
+        
             currentMatch.Items.Add(matchItem);
 
             return View(currentMatch);
