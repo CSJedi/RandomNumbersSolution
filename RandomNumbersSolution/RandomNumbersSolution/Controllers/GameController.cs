@@ -15,7 +15,7 @@ namespace RandomNumbersSolution.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            var matches = db.Matches.Where(m => !String.IsNullOrEmpty(m.WinUserName)).ToList();
+            var matches = db.Matches.Where(m =>!String.IsNullOrEmpty(m.WinUserName) || m.Expired < DateTime.Now).ToList();
             var result = new List<Match>();
             foreach (var match in matches)
             {
@@ -56,7 +56,7 @@ namespace RandomNumbersSolution.Controllers
         {
             var matches = db.Matches.ToList();
             var currentTime = DateTime.Now;
-            return matches.ToList().OrderBy(x => x.Expiration).FirstOrDefault(x => x.Expiration > currentTime);
+            return matches.ToList().OrderBy(x => x.Expired).FirstOrDefault(x => x.Expired > currentTime);
         }
 
         public ActionResult GameResult(MatchItem matchItem)
@@ -66,6 +66,8 @@ namespace RandomNumbersSolution.Controllers
             currentMatch.Items.Add(matchItem);
             var opponentMatchItem = db.MatchItems.FirstOrDefault(m => m.MatchId == currentMatch.Id && m.Id != matchItem.Id);
             currentMatch.WinUserName = matchItem.Number > opponentMatchItem.Number ? matchItem.UserName : opponentMatchItem.UserName;
+            currentMatch.Expired = DateTime.Now;
+            db.SaveChanges();
             return View(currentMatch);
         }
     }
