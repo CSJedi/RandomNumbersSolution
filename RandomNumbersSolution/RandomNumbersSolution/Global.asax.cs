@@ -13,6 +13,7 @@ namespace RandomNumbersSolution
     {
         protected void Application_Start()
         {
+            Initializer.Seed();
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

@@ -13,7 +13,7 @@ namespace RandomNumbersSolution.Controllers
         // GET: Matches
         public ActionResult Index()
         {
-            var matches = db.Matches.Where(m => !String.IsNullOrEmpty(m.WinUserName) || m.Expired < DateTime.Now).ToList();
+            var matches = db.Matches.OrderBy(i => i.Expired).ToList();
             foreach (var match in matches)
             {
                 match.Items = db.MatchItems.Where(m => m.MatchId == match.Id).ToList();

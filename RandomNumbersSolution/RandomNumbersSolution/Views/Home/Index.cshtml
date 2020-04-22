@@ -6,7 +6,7 @@
     <div class="jumbotron">
 
         <h1>Matches</h1>
-
+        <p>The blue color of row means that the match was ended, green - continue.</p>
         <table class="table">
             <tr>
                 <th>
@@ -22,25 +22,26 @@
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @foreach (var matchItem in item.Items)
-                        {
-                            <div>
-                                <p>User: @Html.DisplayFor(modelItem => matchItem.UserName)</p>
-                                <p>Number: @Html.DisplayFor(modelItem => matchItem.Number)</p>
-                            </div>
+               
+            <tr>
+                <td>
+                    @foreach (var matchItem in item.Items)
+                    {
+                        <div>
+                            <p>User: @Html.DisplayFor(modelItem => matchItem.UserName)</p>
+                            <p>Number: @Html.DisplayFor(modelItem => matchItem.Number)</p>
+                        </div>
 
-                        }
-                    </td>
-                    <td>
-                        <p>@Html.DisplayFor(modelItem => item.Expired)</p>
-                    </td>
-                    <th>
-                        <p>@Html.DisplayFor(model => item.WinUserName)</p>
-                    </th>
-                </tr>
-            }
+                    }
+                </td>
+                <td>
+                    <p class="@(item.Expired < DateTime.Now ? "text-primary" : "text-success" )">@Html.DisplayFor(modelItem => item.Expired)</p>
+                </td>
+                <th>
+                    <p>@Html.DisplayFor(model => item.WinUserName)</p>
+                </th>
+            </tr>
+        }
 
         </table>
     </div>

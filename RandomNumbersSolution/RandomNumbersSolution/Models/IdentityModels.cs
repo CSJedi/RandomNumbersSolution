@@ -27,60 +27,10 @@ namespace RandomNumbersSolution.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-
+  
         public static ApplicationDbContext Create()
         {
-            var context = new ApplicationDbContext();
-            //if(await context.Matches.CountAsync() == 0)
-            //{
-                Random random = new Random();
-                var match = new List<Match>
-                {
-                    new Match
-                    {
-                        Id = 1,
-                        Expired = DateTime.Now.AddMinutes(10),
-                        Items = new List<MatchItem>
-                        {
-                            new MatchItem
-                            {
-                                Number = random.Next(),
-                                UserName = "sam"
-                            }
-                        }
-                    },
-                    new Match
-                    {
-                        Id = 2,
-                        Expired = DateTime.Now.AddMinutes(11),
-                        Items = new List<MatchItem>
-                        {
-                            new MatchItem
-                            {
-                                Number = random.Next(),
-                                UserName = "james"
-                            }
-                        }
-                    },
-                    new Match
-                    {
-                        Id = 3,
-                        Expired = DateTime.Now.AddMinutes(12),
-                        Items = new List<MatchItem>
-                        {
-                            new MatchItem
-                            {
-                                Number = random.Next(),
-                                UserName = "peter"
-                            }
-                        }
-                    }
-                 };
-
-                context.Matches.AddRange(match);
-                context.SaveChanges();
-            //}
-            return context;
+            return new ApplicationDbContext();
         }
 
         public DbSet<Match> Matches { get; set; }

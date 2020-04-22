@@ -20,15 +20,18 @@
 
             @foreach (var item in Model)
             {
+                @Html.DisplayFor(model => item.Id)
                 <tr>
                     <td>
                         @foreach (var matchItem in item.Items)
                         {
                             <div>
                                 <p>User: @Html.DisplayFor(modelItem => matchItem.UserName)</p>
-                                <p>Number: @Html.DisplayFor(modelItem => matchItem.Number)</p>
+                                @if (item.Expired < DateTime.Now)
+                                {
+                                    <p>Number: @Html.DisplayFor(modelItem => matchItem.Number)</p>
+                                }
                             </div>
-
                         }
                     </td>
                     <td>
@@ -41,7 +44,7 @@
                         }
                         else
                         {
-                            <input type="button" title="Play Now" value="Play Now" class="btn btn-success" onclick="location.href='@Url.Action("Play", "Game", Model)'" />
+                            <input type="button" title="Play Now" value="Play Now" class="btn btn-success" onclick="location.href='@Url.Action("Play", "Game", item.Id)'" />
                         }
                     </th>
                 </tr>
