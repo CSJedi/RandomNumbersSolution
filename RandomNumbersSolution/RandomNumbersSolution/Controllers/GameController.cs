@@ -59,13 +59,14 @@ namespace RandomNumbersSolution.Controllers
             return matches.ToList().OrderBy(x => x.Expiration).FirstOrDefault(x => x.Expiration > currentTime);
         }
 
-        public ActionResult Submit(MatchItem matchItem)
+        public ActionResult GameResult(MatchItem matchItem)
         {
             var currentMatch = GetCurrentMatch();
             if (currentMatch == null) throw new Exception("there is no available match");
-        
             currentMatch.Items.Add(matchItem);
-       
+            var opponentMatchItem = db.MatchItems.FirstOrDefault(m => m.MatchId == currentMatch.Id && m.Id != matchItem.Id);
+            currentMatch.Items.Add(matchItem);
+            currentMatch.WinUserName = matchItem.Number > opponentMatchItem.Number ? matchItem.UserName : opponentMatchItem.UserName;
             return View(currentMatch);
         }
     }

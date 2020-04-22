@@ -28,7 +28,7 @@ namespace RandomNumbersSolution.Models
         {
         }
 
-        public static async Task<ApplicationDbContext> CreateAsync()
+        public static ApplicationDbContext Create()
         {
             var context = new ApplicationDbContext();
             //if(await context.Matches.CountAsync() == 0)

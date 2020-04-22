@@ -1,0 +1,16 @@
+﻿@model RandomNumbersSolution.Models.Match
+@{
+    ViewBag.Title = "GameResult";
+}
+
+<div class="jumbotron">
+    <h2>Game result:</h2>
+    <p>Win: @Html.DisplayFor(model => model.WinUserName)</p>
+    @foreach (var matchItem in Model.Items)
+    {
+        <div>
+            <p>User: @Html.DisplayFor(modelItem => matchItem.UserName)</p>
+            <p>Number: @Html.DisplayFor(modelItem => matchItem.Number)</p>
+        </div>
+    }
+</div>
