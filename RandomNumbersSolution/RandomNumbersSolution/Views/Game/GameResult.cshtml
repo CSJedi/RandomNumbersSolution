@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "GameResult";
 }
+@Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.Expired)
 <div class="jumbotron">
     <h2>Game result: <span class="label label-success">@Html.DisplayFor(model => model.WinUserName)</span></h2>
     @foreach (var matchItem in Model.Items)
@@ -10,7 +12,6 @@
             <p>User: @Html.DisplayFor(modelItem => matchItem.UserName)</p>
             <p>Number: @Html.DisplayFor(modelItem => matchItem.Number)</p>
         </div>
+        @Html.ActionLink("Refresh result", "GameResult", new { id = matchItem.Id }, new { @class = "btn btn-success" })
     }
-
-    <input type="button" title="Refresh result" value="Refresh result" class="btn btn-success" onclick="location.href='@Url.Action("GameResult", "Game", Model.Items.First())'" />
 </div>

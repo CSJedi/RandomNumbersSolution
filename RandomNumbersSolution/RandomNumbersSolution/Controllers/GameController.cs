@@ -12,7 +12,7 @@ namespace RandomNumbersSolution.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            var matches = db.Matches.Where(m=> m.Expired > DateTime.Now).OrderBy(i => i.Expired).ToList();
+            var matches = db.Matches.Where(m=> m.Expired > DateTime.Now && !m.Items.Any(i => i.UserName == User.Identity.Name)).OrderBy(i => i.Expired).ToList();
             foreach (var match in matches)
             {
                 match.Items = db.MatchItems.Where(m => m.MatchId == match.Id).ToList();
@@ -20,12 +20,12 @@ namespace RandomNumbersSolution.Controllers
             return View(matches);
         }
 
-        public ActionResult Play(int matchId)
+        public ActionResult Play(Match match)
         {
             Random random = new Random();
             var matchItem = new MatchItem
             {
-                MatchId = matchId,
+                MatchId = match.Id,
                 UserName = User.Identity.Name,
                 Number = random.Next(0, 100)
             };
@@ -35,16 +35,16 @@ namespace RandomNumbersSolution.Controllers
         public ActionResult GameResult(MatchItem matchItem)
         {
             var currentMatch = db.Matches.FirstOrDefault(m => m.Id == matchItem.MatchId);
-            if(!currentMatch.Items.Any(i =>i.Id == matchItem.Id))
+            if(!db.MatchItems.Any(i =>i.Id == matchItem.Id))
             {
                 db.MatchItems.Add(matchItem);
-                currentMatch.Items = db.MatchItems.Where(m => m.MatchId == currentMatch.Id).ToList();
                 db.SaveChanges();
             }
 
-            if(currentMatch.Expired > DateTime.Now)
+            if(currentMatch.Expired < DateTime.Now)
             {
-                currentMatch.WinUserName = currentMatch.Items.FirstOrDefault(m => m.Number == currentMatch.Items.Max(i => i.Number)).UserName;
+                var matchItems = db.MatchItems.Where(i => i.MatchId == currentMatch.Id).ToList();
+                currentMatch.WinUserName = matchItems.FirstOrDefault(m => m.Number == currentMatch.Items.Max(i => i.Number)).UserName;
                 db.SaveChanges();
             }
            

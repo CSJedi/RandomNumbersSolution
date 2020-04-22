@@ -20,11 +20,13 @@
 
             @foreach (var item in Model)
             {
+                
                 @Html.HiddenFor(model => item.Id)
                 <tr>
                     <td>
                         @foreach (var matchItem in item.Items)
                         {
+                            @Html.HiddenFor(modelItem => matchItem.Id)
                             <div>
                                 <p>User: @Html.DisplayFor(modelItem => matchItem.UserName)</p>
                                 @if (item.Expired < DateTime.Now)
@@ -44,11 +46,11 @@
                         }
                         else
                         {
-                            <input type="button" title="Play Now" value="Play Now" class="btn btn-success" onclick="location.href='@Url.Action("Play", "Game", item.Id)'" />
+                            @Html.ActionLink("Play Now", "Play", new { id = item.Id }, new { @class = "btn btn-success" })
                         }
                     </th>
                 </tr>
+                
             }
-
         </table>
     </div>
