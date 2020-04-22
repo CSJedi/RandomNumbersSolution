@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -39,11 +40,28 @@ namespace RandomNumbersSolution.Controllers
 
         public ActionResult Play()
         {
-            ViewBag.Message = "Your application description page.";
+            return View();
+        }
+        private Match GetCurrentMatch()
+        {
+            var matches = db.Matches.ToList();
+            var currentTime = DateTime.Now;
+            return matches.ToList().OrderBy(x => x.Expiration).FirstOrDefault(x => x.Expiration > currentTime);
+        }
+        public ActionResult Play(int number)
+        {
+            var currentMatch = GetCurrentMatch();
+            if (currentMatch == null) throw new Exception("there is no available match");
+
+            var matchItem = new MatchItem
+            {
+                MatchId = currentMatch.Id,
+                UserName = User.Identity.Name,
+                Number = number
+            };
 
             return View();
         }
-
 
     }
 }
