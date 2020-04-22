@@ -4,8 +4,7 @@
 }
 
 <div class="jumbotron">
-    <h2>Game result:</h2>
-    <p>Win: @Html.DisplayFor(model => model.WinUserName)</p>
+    <h2>Game result: <span class="label label-success">Win: @Html.DisplayFor(model => model.WinUserName)</span></h2>
     @foreach (var matchItem in Model.Items)
     {
         <div>
