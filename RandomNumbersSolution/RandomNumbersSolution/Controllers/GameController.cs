@@ -37,7 +37,6 @@ namespace RandomNumbersSolution.Controllers
             return false;
         }
 
-
         public ActionResult Play()
         {
             return View();
@@ -48,7 +47,8 @@ namespace RandomNumbersSolution.Controllers
             var currentTime = DateTime.Now;
             return matches.ToList().OrderBy(x => x.Expiration).FirstOrDefault(x => x.Expiration > currentTime);
         }
-        public ActionResult Play(int number)
+
+        public ActionResult SubmitNumber(int number)
         {
             var currentMatch = GetCurrentMatch();
             if (currentMatch == null) throw new Exception("there is no available match");
@@ -60,7 +60,9 @@ namespace RandomNumbersSolution.Controllers
                 Number = number
             };
 
-            return View();
+            currentMatch.Items.Add(matchItem);
+
+            return View(currentMatch);
         }
 
     }

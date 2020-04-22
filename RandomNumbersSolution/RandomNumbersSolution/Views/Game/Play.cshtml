@@ -1,0 +1,7 @@
+﻿@model RandomNumbersSolution.Domain.Entities.MatchItem
+{
+    ViewBag.Title = "Play";
+}
+@Html.EditorFor(model => model.UserName)
+@Html.EditorFor(model => model.Number)
+<input type="button" title="Play Now" value="D" onclick="location.href='@Url.Action("SubmitNumber", "Game")'" />
