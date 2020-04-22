@@ -18,11 +18,22 @@ namespace RandomNumbersSolution.Controllers
             var result = new List<Match>();
             foreach (var match in matches)
             {
-                match.Items = db.MatchItems.Where(m => m.MatchId == match.Id && m.UserName == User.Identity.Name).ToList();
-                if (match.Items != null && match.Items.Count == 2)
+                match.Items = db.MatchItems.Where(m => m.MatchId == match.Id).ToList();
+    
+                if (match.Items != null && CheckIsUserPlayedMatch(match))
                     result.Add(match);
             }
             return View(result);
+        }
+
+        private bool CheckIsUserPlayedMatch(Match match)
+        {
+            foreach (var item in match.Items)
+            {
+                if (item.UserName == User.Identity.Name)
+                    return true;
+            }
+            return false;
         }
 
 
