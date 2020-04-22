@@ -4,7 +4,7 @@
 }
 
     <div class="jumbotron">
-        <h1>Matches</h1>
+        <h2>Matches</h2>
         <table class="table">
             <tr>
                 <th>
@@ -20,7 +20,7 @@
 
             @foreach (var item in Model)
             {
-                @Html.DisplayFor(model => item.Id)
+                @Html.HiddenFor(model => item.Id)
                 <tr>
                     <td>
                         @foreach (var matchItem in item.Items)

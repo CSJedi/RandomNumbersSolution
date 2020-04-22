@@ -40,6 +40,11 @@ namespace RandomNumbersSolution
                                 {
                                     Number = random.Next(0, 100),
                                     UserName = "james"
+                                },
+                                new MatchItem
+                                {
+                                    Number = random.Next(0, 100),
+                                    UserName = "sam"
                                 }
                             }
                         },
@@ -53,6 +58,16 @@ namespace RandomNumbersSolution
                                 {
                                     Number = random.Next(0, 100),
                                     UserName = "peter"
+                                },
+                                new MatchItem
+                                {
+                                    Number = random.Next(0, 100),
+                                    UserName = "james"
+                                },
+                                new MatchItem
+                                {
+                                    Number = random.Next(0, 100),
+                                    UserName = "sam"
                                 }
                             }
                         }

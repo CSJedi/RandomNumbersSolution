@@ -25,14 +25,14 @@ namespace RandomNumbersSolution.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
+            ViewBag.Title = "About page.";
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
+            ViewBag.Message = "Contact page.";
+            ViewBag.Title = "Contact page.";
             return View();
         }
     }
