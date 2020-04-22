@@ -41,12 +41,12 @@ namespace RandomNumbersSolution.Models
                         new MatchItem
                         {
                             Number = 57,
-                            UserName = "vasya.pupkin"
+                            UserName = "vasya.pupkin@gmail.com"
                         },
                        new MatchItem
                         {
                             Number = 51,
-                            UserName = "tetiana.zhydeikina"
+                            UserName = "tetiana.zhydeikina@gmail.com"
                         }
                     },
                     WinUserName = "vasya.pupkin"
