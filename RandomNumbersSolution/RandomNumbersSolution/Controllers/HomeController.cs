@@ -17,6 +17,11 @@ namespace RandomNumbersSolution.Controllers
             foreach (var match in matches)
             {
                 match.Items = db.MatchItems.Where(m => m.MatchId == match.Id).ToList();
+                if (match.Expired < DateTime.Now && String.IsNullOrEmpty(match.WinUserName))
+                {
+                    match.WinUserName = match.Items.FirstOrDefault(m => m.Number == match.Items.Max(i => i.Number)).UserName;
+                    db.SaveChanges();
+                }
             }
             return View(matches);
         }
